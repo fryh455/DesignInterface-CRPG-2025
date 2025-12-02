@@ -1,188 +1,86 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Timeline — Principais Vírus da Internet</title>
-  <link rel="stylesheet" href="style.css">
-  <meta name="description" content="Linha do tempo dos principais vírus da internet — Creeper, Brain, Michelangelo, ILOVEYOU, Code Red/Nimda, WannaCry, Emotet. Slider full-screen, transições suaves." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Timeline</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="app" class="slider" aria-roledescription="carousel">
-    <header class="app-header" role="banner">
-      <div class="brand">CYBER • TIMELINE</div>
 
-      <!-- Nav: links para slides (deep links) -->
-      <nav style="margin-left:18px;">
-        <a href="index.html#slide-0">Creeper</a> |
-        <a href="index.html#slide-1">Brain</a> |
-        <a href="index.html#slide-2">Michelangelo</a> |
-        <a href="index.html#slide-3">ILOVEYOU</a> |
-        <a href="index.html#slide-4">Code Red/Nimda</a> |
-        <a href="index.html#slide-5">WannaCry</a> |
-        <a href="index.html#slide-6">Emotet</a> |
-        <a href="contato.html">Contato</a>
-      </nav>
-    </header>
+<div class="timeline-container">
 
-    <div class="slider-inner">
-      <div class="slides" role="list" aria-labelledby="carousel-desc">
-        <!-- Slide 0 -->
-        <section class="slide" id="slide-0" role="listitem" aria-roledescription="slide" aria-label="1 de 7 — Creeper (1971)">
-          <div class="panel" role="group" aria-labelledby="title-0">
-            <div class="meta"><div class="year">1971</div><h2 id="title-0">Creeper</h2><p class="caption u-muted">Primeiro programa autorreplicante — ARPANET.</p></div>
-            <div class="content">
-              <p class="lead">O "Creeper" era um experimento que se replicava em terminais ARPANET e exibia: “I'M THE CREEPER : CATCH ME IF YOU CAN”.</p>
-            </div>
-          </div>
-        </section>
+    <div class="slides-wrapper" id="slidesWrapper">
 
         <!-- Slide 1 -->
-        <section class="slide" id="slide-1" role="listitem" aria-roledescription="slide" aria-label="2 de 7 — Brain (1986)">
-          <div class="panel" role="group" aria-labelledby="title-1">
-            <div class="meta"><div class="year">1986</div><h2 id="title-1">Brain</h2><p class="caption u-muted">Vírus de boot — primeiros PCs.</p></div>
-            <div class="content"><p class="lead">Brain infectava o setor de boot de disquetes MS-DOS, propagando-se via mídia removível.</p></div>
-          </div>
+        <section class="slide">
+            <h1>🦠 1986 — Brain Virus</h1>
+            <p>Primeiro vírus amplamente difundido na história da internet.</p>
         </section>
 
         <!-- Slide 2 -->
-        <section class="slide" id="slide-2" role="listitem" aria-roledescription="slide" aria-label="3 de 7 — Michelangelo (1992)">
-          <div class="panel" role="group" aria-labelledby="title-2">
-            <div class="meta"><div class="year">1992</div><h2 id="title-2">Michelangelo</h2><p class="caption u-muted">Data-trigger — destruição de setores.</p></div>
-            <div class="content"><p class="lead">Programado para sobrescrever setores em data específica; gerou grande repercussão sobre backups/restauração.</p></div>
-          </div>
+        <section class="slide">
+            <h1>🐛 2000 — ILOVEYOU</h1>
+            <p>Um dos mais destrutivos da história, causado bilhões em danos.</p>
         </section>
 
         <!-- Slide 3 -->
-        <section class="slide" id="slide-3" role="listitem" aria-roledescription="slide" aria-label="4 de 7 — ILOVEYOU (2000)">
-          <div class="panel" role="group" aria-labelledby="title-3">
-            <div class="meta"><div class="year">2000</div><h2 id="title-3">ILOVEYOU</h2><p class="caption u-muted">Worm via e-mail — engenharia social.</p></div>
-            <div class="content"><p class="lead">Propagava-se por e-mail sobrescrevendo arquivos e explorando listas de contatos; enorme impacto financeiro.</p></div>
-          </div>
+        <section class="slide">
+            <h1>🕷 2008 — Conficker</h1>
+            <p>Infectou milhões de máquinas no mundo todo.</p>
         </section>
 
         <!-- Slide 4 -->
-        <section class="slide" id="slide-4" role="listitem" aria-roledescription="slide" aria-label="5 de 7 — Code Red / Nimda (2001)">
-          <div class="panel" role="group" aria-labelledby="title-4">
-            <div class="meta"><div class="year">2001</div><h2 id="title-4">Code Red / Nimda</h2><p class="caption u-muted">Worms multi-vetor atacando servidores.</p></div>
-            <div class="content"><p class="lead">Exploraram servidores IIS e múltiplos vetores (web, email, paste), demonstrando rapidez de propagação.</p></div>
-          </div>
+        <section class="slide">
+            <h1>🔥 2017 — WannaCry</h1>
+            <p>Se espalhou em minutos globalmente via ransomware.</p>
         </section>
 
-        <!-- Slide 5 -->
-        <section class="slide" id="slide-5" role="listitem" aria-roledescription="slide" aria-label="6 de 7 — WannaCry (2017)">
-          <div class="panel" role="group" aria-labelledby="title-5">
-            <div class="meta"><div class="year">2017</div><h2 id="title-5">WannaCry</h2><p class="caption u-muted">Ransomware — EternalBlue.</p></div>
-            <div class="content"><p class="lead">Ransomware global que usou o exploit EternalBlue; destacou importância de patching e segmentação de rede.</p></div>
-          </div>
-        </section>
+    </div>
 
-        <!-- Slide 6 -->
-        <section class="slide" id="slide-6" role="listitem" aria-roledescription="slide" aria-label="7 de 7 — Emotet / 2020+">
-          <div class="panel" role="group" aria-labelledby="title-6">
-            <div class="meta"><div class="year">2020+</div><h2 id="title-6">Emotet & Evolução Moderna</h2><p class="caption u-muted">Malware modular, botnets, MAAS.</p></div>
-            <div class="content"><p class="lead">Plataforma modular que distribui loaders e ransomwares — cadeia de ataque moderna (phishing → loader → lateral → encrypt).</p></div>
-          </div>
-        </section>
-      </div> <!-- .slides -->
-    </div> <!-- .slider-inner -->
+    <button class="arrow-btn" id="nextBtn">→</button>
 
-    <nav class="nav" aria-label="Controles do carrossel">
-      <button class="arrow left" id="prev" aria-label="Slide anterior"></button>
-      <button class="arrow right" id="next" aria-label="Próximo slide"></button>
-    </nav>
+</div>
 
-    <div class="progress" id="dots" role="tablist" aria-label="Navegação por slides"></div>
+<!-- Popup do contato -->
+<div id="popup" class="popup hidden">
+    <div class="popup-content">
+        <span class="close-btn" id="closePopup">×</span>
+        <h2>Cadastro</h2>
+        <form>
+            <label>Nome:</label>
+            <input type="text" placeholder="Seu nome">
 
-    <footer style="position:absolute;right:18px;bottom:18px;color:var(--muted);font-size:12px;z-index:210;">
-      © 2025 — Timeline Cyber
-    </footer>
-  </div>
+            <label>Telefone:</label>
+            <input type="text" placeholder="(xx) xxxxx-xxxx">
 
-  <script>
-    (function () {
-      const slides = Array.from(document.querySelectorAll('.slide'));
-      const nextBtn = document.getElementById('next');
-      const prevBtn = document.getElementById('prev');
-      const dotsWrap = document.getElementById('dots');
-      let index = 0;
-      const len = slides.length;
+            <button type="button">Enviar</button>
+        </form>
+    </div>
+</div>
 
-      // ensure only one is-active at start: remove from all
-      slides.forEach(s => s.classList.remove('is-active'));
+<script>
+    let current = 0;
+    const wrapper = document.getElementById("slidesWrapper");
+    const totalSlides = document.querySelectorAll(".slide").length;
+    const popup = document.getElementById("popup");
+    const closePopup = document.getElementById("closePopup");
 
-      // create dots
-      slides.forEach((s, i) => {
-        const dot = document.createElement('button');
-        dot.className = 'dot';
-        dot.setAttribute('aria-label', `Ir para slide ${i+1}`);
-        dot.setAttribute('role','tab');
-        dot.addEventListener('click', () => goTo(i, true));
-        dotsWrap.appendChild(dot);
-      });
-      const dots = Array.from(dotsWrap.children);
+    document.getElementById("nextBtn").addEventListener("click", () => {
+        current++;
 
-      function update() {
-        slides.forEach((s, i) => {
-          s.classList.toggle('is-active', i === index);
-          s.setAttribute('aria-hidden', i === index ? 'false' : 'true');
-        });
-        dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
-        const activeTitle = slides[index].querySelector('h2')?.textContent || '';
-        document.title = `${index+1}/${len} — ${activeTitle} — Timeline`;
-        // update hash without creating history entries
-        history.replaceState(null, '', '#slide-' + index);
-      }
-
-      function goTo(i, userInitiated = false) {
-        index = (i + len) % len;
-        update();
-        if (userInitiated) slides[index].querySelector('h2')?.focus?.();
-      }
-
-      nextBtn.addEventListener('click', () => goTo(index + 1, true));
-      prevBtn.addEventListener('click', () => goTo(index - 1, true));
-
-      window.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowRight') goTo(index + 1, true);
-        if (e.key === 'ArrowLeft') goTo(index - 1, true);
-      });
-
-      // touch
-      (function addTouch() {
-        let startX = 0, dist = 0, threshold = 40;
-        const el = document.querySelector('.slides');
-        el.addEventListener('touchstart', (e) => startX = e.touches[0].clientX, {passive:true});
-        el.addEventListener('touchmove', (e) => dist = e.touches[0].clientX - startX, {passive:true});
-        el.addEventListener('touchend', () => {
-          if (Math.abs(dist) > threshold) { dist < 0 ? goTo(index + 1, true) : goTo(index - 1, true); }
-          dist = 0;
-        }, {passive:true});
-      })();
-
-      // focusable headings
-      slides.forEach(s => { const h2 = s.querySelector('h2'); if (h2) h2.tabIndex = -1; });
-
-      // handle initial hash or default 0
-      function handleHashOnLoad() {
-        const h = location.hash;
-        if (h && h.startsWith('#slide-')) {
-          const n = parseInt(h.replace('#slide-',''),10);
-          if (!isNaN(n) && n >= 0 && n < len) { index = n; }
+        if (current < totalSlides) {
+            wrapper.style.transform = `translateX(-${current * 100}vw)`;
+        } else {
+            popup.classList.remove("hidden");
         }
-      }
-      handleHashOnLoad();
-      update();
+    });
 
-      // handle back/forward
-      window.addEventListener('popstate', () => {
-        const h = location.hash;
-        if (h && h.startsWith('#slide-')) {
-          const n = parseInt(h.replace('#slide-',''),10);
-          if (!isNaN(n) && n >= 0 && n < len) goTo(n, false);
-        }
-      });
-    })();
-  </script>
+    closePopup.addEventListener("click", () => {
+        popup.classList.add("hidden");
+        current = totalSlides - 1;
+    });
+</script>
+
 </body>
 </html>
