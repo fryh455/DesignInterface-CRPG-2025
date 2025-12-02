@@ -1,204 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Contato — Cyber Vault</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <header class="app-header" role="banner" style="position:static">
-    <div class="brand">CYBER • CONTACTS</div>
-  </header>
+  <header><h2>Cyber Vault — Contato</h2></header>
 
-  <main style="padding:28px;max-width:920px;margin:64px auto;">
-    <h1 id="greeting">Entre em Contato</h1>
+  <main style="padding:24px; max-width:600px; margin:auto;">
 
-    <!-- AREA: Welcome / login state -->
-    <div id="user-area" style="margin-bottom:20px;">
-      <div id="welcome-box" style="display:none;">
-        <strong id="welcome-name"></strong>
-        <button id="logoutBtn" style="margin-left:12px;padding:6px 10px;border-radius:8px;border:none;cursor:pointer">Sair</button>
-      </div>
-    </div>
+    <h1>Cadastro / Login</h1>
 
-    <!-- MINI CADASTRO -->
-    <section style="margin-bottom:28px;">
-      <h2 style="margin:0 0 8px 0">Mini Cadastro</h2>
-      <form id="cadastroForm" class="contato-form" autocomplete="off">
-        <label for="cadNome">Nome:</label>
-        <input type="text" id="cadNome" name="nome" placeholder="Seu nome completo" required>
+    <!-- Formulário de cadastro -->
+    <form id="cadastroForm">
+      <label>Nome:</label><br/>
+      <input type="text" name="nome" required/><br/>
+      <label>Telefone:</label><br/>
+      <input type="text" name="telefone" required/><br/>
+      <label>E-mail:</label><br/>
+      <input type="email" name="email" required/><br/>
+      <label>Senha:</label><br/>
+      <input type="password" name="senha" required/><br/>
+      <button type="submit">Cadastrar</button>
+    </form>
+    <div id="cadMsg"></div>
 
-        <label for="cadTel">Telefone:</label>
-        <input type="tel" id="cadTel" name="telefone" placeholder="(xx) xxxxx-xxxx" required>
+    <hr/>
 
-        <div style="display:flex;gap:10px;margin-top:10px;align-items:center">
-          <button type="submit">Cadastrar</button>
-          <div id="cadStatus" class="info-msg" style="margin:0"></div>
-        </div>
-      </form>
-    </section>
+    <!-- Formulário de login -->
+    <form id="loginForm">
+      <label>Nome:</label><br/>
+      <input type="text" name="nome" required/><br/>
+      <label>Senha:</label><br/>
+      <input type="password" name="senha" required/><br/>
+      <button type="submit">Login</button>
+    </form>
+    <div id="loginMsg"></div>
 
-    <!-- LOGIN -->
-    <section style="margin-bottom:28px;">
-      <h2 style="margin:0 0 8px 0">Login</h2>
-      <form id="loginForm" class="contato-form" autocomplete="off">
-        <label for="loginNome">Nome (use o mesmo do cadastro):</label>
-        <input type="text" id="loginNome" name="loginNome" placeholder="Digite seu nome" required>
-
-        <div style="display:flex;gap:10px;margin-top:10px;align-items:center">
-          <button type="submit">Entrar</button>
-          <div id="loginStatus" class="info-msg" style="margin:0"></div>
-        </div>
-      </form>
-    </section>
-
-    <hr style="margin:28px 0;opacity:0.06"/>
-
-    <!-- CONTATO ORIGINAL (mensagem) -->
-    <section style="margin-bottom:28px;">
-      <h2 style="margin:0 0 8px 0">Mensagem</h2>
-      <form id="mensagemForm" class="contato-form" action="#" method="post" autocomplete="off">
-        <label for="msgNome">Nome:</label>
-        <input type="text" id="msgNome" name="msgNome" placeholder="Seu nome" required>
-
-        <label for="msgEmail">E-mail:</label>
-        <input type="email" id="msgEmail" name="msgEmail" placeholder="seu@exemplo.com" required>
-
-        <label for="msgTexto">Mensagem:</label>
-        <textarea id="msgTexto" name="mensagem" rows="5" placeholder="Escreva sua mensagem"></textarea>
-
-        <label for="msgData">Data do contato:</label>
-        <input type="date" id="msgData" name="data">
-
-        <div style="display:flex;gap:10px;margin-top:10px;align-items:center">
-          <button type="submit">Enviar Mensagem</button>
-          <div id="msgStatus" class="info-msg" style="margin:0"></div>
-        </div>
-      </form>
-    </section>
+    <h2 id="bemvindo" style="margin-top:24px;"></h2>
 
   </main>
 
-  <footer style="text-align:center;padding:18px;color:var(--muted)">
-    © 2025 Cyber Vault
-  </footer>
+  <footer style="text-align:center; padding:12px;">© 2025 Cyber Vault</footer>
 
 <script>
-/* CONTATOS: cadastro + login + persistência via Google Apps Script (Sheets)
-   - Substitua SCRIPT_URL pela sua URL do Apps Script que trata:
-     GET  ?tipo=cadastros        -> retorna array de cadastros [{nome, telefone}, ...]
-     POST (JSON) { tipo: "cadastro", nome, telefone } -> grava novo cadastro
-     POST (JSON) { tipo: "mensagem", nome, email, mensagem, data } -> grava mensagem
-*/
-const SCRIPT_URL = "https://script.google.com/macros/s/SEU_ID_AQUI/exec"; // <--- substitua aqui
+const API_URL = "https://script.google.com/macros/s/AKfycbzXH7yPLftYDFzNsfLngNsUFG5-XZhZheEndk675YczHmHp0KRC2Ebw7wTH0brywmqu/exec";
 
-/* ----- helpers ----- */
-const $ = id => document.getElementById(id);
-const setStatus = (el, txt, err=false) => { el.textContent = txt; el.style.color = err ? '#ff6b6b' : ''; };
-
-/* ----- cadastro ----- */
-$('cadastroForm').addEventListener('submit', async (e) => {
+document.getElementById("cadastroForm").addEventListener("submit", async e => {
   e.preventDefault();
-  const nome = $('cadNome').value.trim();
-  const telefone = $('cadTel').value.trim();
-  const status = $('cadStatus');
-
-  if (!nome || !telefone) return setStatus(status, 'Preencha todos os campos', true);
-  setStatus(status, 'Enviando...');
-
+  const fd = new FormData(e.target);
+  const data = {
+    nome: fd.get("nome"),
+    telefone: fd.get("telefone"),
+    email: fd.get("email"),
+    senha: fd.get("senha")
+  };
   try {
-    const res = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json' },
-      body: JSON.stringify({ tipo:'cadastro', nome, telefone })
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(data)
     });
-    // optional: inspect response
-    setStatus(status, 'Cadastro salvo com sucesso.');
-    $('cadastroForm').reset();
-  } catch (err) {
-    setStatus(status, 'Erro ao salvar: ' + err.message, true);
+    const j = await res.json();
+    document.getElementById("cadMsg").textContent = j.status === "OK" ? "Cadastro realizado!" : "Erro: " + (j.erro||"");
+  } catch(err) {
+    document.getElementById("cadMsg").textContent = "Erro de rede.";
   }
 });
 
-/* ----- login ----- */
-$('loginForm').addEventListener('submit', async (e) => {
+document.getElementById("loginForm").addEventListener("submit", async e => {
   e.preventDefault();
-  const nomeBusca = $('loginNome').value.trim();
-  const status = $('loginStatus');
-  if (!nomeBusca) return setStatus(status, 'Digite o nome para login', true);
-  setStatus(status, 'Verificando...');
-
+  const nome = e.target.nome.value.trim();
+  const senha = e.target.senha.value.trim();
   try {
-    const res = await fetch(SCRIPT_URL + '?tipo=cadastros');
-    const cadastros = await res.json(); // espera array
-    const user = cadastros.find(c => c.nome && c.nome.toLowerCase() === nomeBusca.toLowerCase());
-
-    if (!user) {
-      setStatus(status, 'Usuário não encontrado.', true);
+    const res = await fetch(API_URL + "?action=listar");
+    const users = await res.json();
+    const u = users.find(u => u.nome === nome && u.senha === senha);
+    if (!u) {
+      document.getElementById("loginMsg").textContent = "Usuário ou senha incorretos.";
       return;
     }
-
-    // salvar login no browser
-    localStorage.setItem('usuarioLogado', user.nome);
-    setStatus(status, 'Login bem-sucedido. Bem-vindo, ' + user.nome + '!');
-    updateUIAfterLogin(user.nome);
-
-  } catch (err) {
-    setStatus(status, 'Erro: ' + err.message, true);
+    document.getElementById("bemvindo").textContent = "Bem-vindo, " + u.nome + "!";
+    document.getElementById("loginMsg").textContent = "";
+  } catch(err) {
+    document.getElementById("loginMsg").textContent = "Erro de rede.";
   }
 });
-
-/* ----- mensagem original (envio para planilha) ----- */
-$('mensagemForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const nome = $('msgNome').value.trim();
-  const email = $('msgEmail').value.trim();
-  const mensagem = $('msgTexto').value.trim();
-  const data = $('msgData').value || new Date().toISOString().slice(0,10);
-  const status = $('msgStatus');
-
-  if (!nome || !email) return setStatus(status, 'Nome e e-mail são obrigatórios', true);
-  setStatus(status, 'Enviando mensagem...');
-
-  try {
-    const res = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json' },
-      body: JSON.stringify({ tipo:'mensagem', nome, email, mensagem, data })
-    });
-    setStatus(status, 'Mensagem enviada com sucesso.');
-    $('mensagemForm').reset();
-  } catch (err) {
-    setStatus(status, 'Erro ao enviar: ' + err.message, true);
-  }
-});
-
-/* ----- UI de login persistente ----- */
-function updateUIAfterLogin(nome) {
-  if (nome) {
-    $('welcome-box').style.display = 'inline-flex';
-    $('welcome-name').textContent = 'Bem-vindo, ' + nome;
-    $('greeting').textContent = 'Contato — Bem-vindo';
-  } else {
-    $('welcome-box').style.display = 'none';
-    $('welcome-name').textContent = '';
-    $('greeting').textContent = 'Entre em Contato';
-  }
-}
-
-/* logout */
-$('logoutBtn').addEventListener('click', () => {
-  localStorage.removeItem('usuarioLogado');
-  updateUIAfterLogin(null);
-});
-
-/* manter sessão ao recarregar */
-(function init() {
-  const nome = localStorage.getItem('usuarioLogado');
-  if (nome) updateUIAfterLogin(nome);
-})();
-
 </script>
 </body>
 </html>
