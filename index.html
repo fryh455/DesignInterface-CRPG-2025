@@ -1,121 +1,282 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aluguel de Veículos</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Timeline — Principais Vírus da Internet</title>
   <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Linha do tempo dos principais vírus da internet — Creeper, Brain, Michelangelo, ILOVEYOU, Code Red/Nimda, WannaCry, Emotet. Slider full-screen, transições suaves." />
 </head>
-
 <body>
+  <div id="app" class="slider" aria-roledescription="carousel">
+    <!-- Minimal header / branding -->
+    <header class="app-header" role="banner">
+      <div class="brand" aria-hidden="false">CYBER • TIMELINE</div>
+      <div class="visually-hidden" id="carousel-desc">Use setas, deslize ou teclas ← → para navegar. 7 slides: Creeper (1971) → Emotet (2020+).</div>
+    </header>
 
-  <!-- Cabeçalho -->
-  <header>
-    <h2>Locadora IFPR</h2>
-    <nav>
-      <a href="index.html">Início</a>
-      <a href="filiais.html">Filiais</a>
-      <a href="contato.html">Contato</a>
-      <a href="planilha.html">Planilha</a>
+    <div class="slider-inner">
+      <div class="slides" role="list" aria-labelledby="carousel-desc">
+        <!-- Slide 1: Creeper -->
+        <section class="slide is-active" id="slide-0" role="listitem" aria-roledescription="slide" aria-label="1 de 7 — Creeper (1971)">
+          <div class="panel" role="group" aria-labelledby="title-0">
+            <div class="meta">
+              <div class="year">1971</div>
+              <h2 id="title-0">Creeper</h2>
+              <p class="caption u-muted">Primeiro programa autorreplicante conhecido — curiosidade em ARPANET.</p>
+            </div>
+
+            <div class="content">
+              <p class="lead">Descrição: O "Creeper" era um experimento que mostrava replicação entre terminais da ARPANET. Não tinha caráter malicioso como vírus modernos; apenas exibia a mensagem: “I'M THE CREEPER : CATCH ME IF YOU CAN”.</p>
+              <div class="chips" aria-hidden="true">
+                <span class="chip">Autorreplicante</span>
+                <span class="chip">ARPANET</span>
+                <span class="chip">Histórico</span>
+              </div>
+              <div class="media" aria-hidden="true" style="padding:18px;">
+                <svg width="100%" height="120" viewBox="0 0 800 120" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="800" height="120" rx="8" fill="#04101a"/>
+                  <text x="28" y="64" fill="#00ff9c" font-family="monospace" font-size="20">I'M THE CREEPER : CATCH ME IF YOU CAN</text>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 2: Brain -->
+        <section class="slide" id="slide-1" role="listitem" aria-roledescription="slide" aria-label="2 de 7 — Brain (1986)">
+          <div class="panel" role="group" aria-labelledby="title-1">
+            <div class="meta">
+              <div class="year">1986</div>
+              <h2 id="title-1">Brain</h2>
+              <p class="caption u-muted">Vírus de boot disk para PCs — primeiro a atingir microcomputadores pessoais.</p>
+            </div>
+
+            <div class="content">
+              <p class="lead">Descrição: Criado por irmãos no Paquistão, o Brain infectava o setor de boot de discos flexíveis MS-DOS. Destacado por ser o primeiro vírus a circular amplamente em PCs pessoais.</p>
+              <div class="chips" aria-hidden="true">
+                <span class="chip">Boot Sector</span>
+                <span class="chip">MS-DOS</span>
+                <span class="chip">Propagação por disquetes</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 3: Michelangelo -->
+        <section class="slide" id="slide-2" role="listitem" aria-roledescription="slide" aria-label="3 de 7 — Michelangelo (1992)">
+          <div class="panel" role="group" aria-labelledby="title-2">
+            <div class="meta">
+              <div class="year">1992</div>
+              <h2 id="title-2">Michelangelo</h2>
+              <p class="caption u-muted">Ransom-like / destructivo — ativação em data específica.</p>
+            </div>
+
+            <div class="content">
+              <p class="lead">Descrição: Projetado para sobrescrever setores do disco rígido numa data específica (14 de março — aniversário de Michelangelo). Ganhou repercussão pela mídia e pela preocupação com backup e recuperação.</p>
+              <div class="chips" aria-hidden="true">
+                <span class="chip">Destruição de dados</span>
+                <span class="chip">Data-trigger</span>
+                <span class="chip">Mídia massiva</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 4: ILOVEYOU -->
+        <section class="slide" id="slide-3" role="listitem" aria-roledescription="slide" aria-label="4 de 7 — ILOVEYOU (2000)">
+          <div class="panel" role="group" aria-labelledby="title-3">
+            <div class="meta">
+              <div class="year">2000</div>
+              <h2 id="title-3">ILOVEYOU</h2>
+              <p class="caption u-muted">Worm via e-mail — um dos maiores incidentes por alcance e dano econômico.</p>
+            </div>
+
+            <div class="content">
+              <p class="lead">Descrição: Um worm distribuído por e-mail com assunto "ILOVEYOU" que sobrescrevia arquivos e se propagava via lista de contatos. Causou danos financeiros massivos e evidenciou vulnerabilidades humanas via engenharia social.</p>
+              <div class="chips" aria-hidden="true">
+                <span class="chip">Worm</span>
+                <span class="chip">Engenharia social</span>
+                <span class="chip">E-mail</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 5: Code Red / Nimda -->
+        <section class="slide" id="slide-4" role="listitem" aria-roledescription="slide" aria-label="5 de 7 — Code Red e Nimda (2001)">
+          <div class="panel" role="group" aria-labelledby="title-4">
+            <div class="meta">
+              <div class="year">2001</div>
+              <h2 id="title-4">Code Red / Nimda</h2>
+              <p class="caption u-muted">Ataques em massa a servidores Windows — worms que exploravam falhas em serviços de internet.</p>
+            </div>
+
+            <div class="content">
+              <p class="lead">Descrição: Code Red explorou vulnerabilidade do IIS, causando defacements e sobrecarga. Nimda combinou vetores (e-mail, web, pasta compartilhada) demonstrando técnicas multi-vetor e velocidade de propagação.</p>
+              <div class="chips" aria-hidden="true">
+                <span class="chip">Worm Multi-vetor</span>
+                <span class="chip">IIS</span>
+                <span class="chip">Exploração</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 6: WannaCry -->
+        <section class="slide" id="slide-5" role="listitem" aria-roledescription="slide" aria-label="6 de 7 — WannaCry (2017)">
+          <div class="panel" role="group" aria-labelledby="title-5">
+            <div class="meta">
+              <div class="year">2017</div>
+              <h2 id="title-5">WannaCry</h2>
+              <p class="caption u-muted">Ransomware global que explorou vulnerabilidade Windows (EternalBlue).</p>
+            </div>
+
+            <div class="content">
+              <p class="lead">Descrição: Ransomware amplamente divulgado em maio de 2017; usou exploit EternalBlue (vazado da NSA). Afetou hospitais, empresas e infraestruturas, destacando importância de patching e segmentação de redes.</p>
+              <div class="chips" aria-hidden="true">
+                <span class="chip">Ransomware</span>
+                <span class="chip">EternalBlue</span>
+                <span class="chip">Impacto global</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Slide 7: Emotet / Atualidade -->
+        <section class="slide" id="slide-6" role="listitem" aria-roledescription="slide" aria-label="7 de 7 — Emotet / 2020+">
+          <div class="panel" role="group" aria-labelledby="title-6">
+            <div class="meta">
+              <div class="year">2020+</div>
+              <h2 id="title-6">Emotet & Evolução Moderna</h2>
+              <p class="caption u-muted">Malware modular, botnets e cadeia de ataques modernos (phishing → loader → ransomware).</p>
+            </div>
+
+            <div class="content">
+              <p class="lead">Descrição: Emotet evoluiu para uma plataforma modular que distribui loaders, bancos de dados de credenciais e ransomwares — representando a cadeia de ataque atual e economia subterrânea de malware-as-a-service.</p>
+              <div class="chips" aria-hidden="true">
+                <span class="chip">Modular</span>
+                <span class="chip">Botnet</span>
+                <span class="chip">MAAS</span>
+              </div>
+
+              <div class="media" aria-hidden="true" style="padding:12px;">
+                <pre style="font-family:var(--font-mono); font-size:12px; margin:0; color:var(--muted);">vector: phishing → loader → lateral movement → encrypt</pre>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div> <!-- .slides -->
+    </div> <!-- .slider-inner -->
+
+    <!-- Navigation arrows -->
+    <nav class="nav" aria-hidden="false" aria-label="Controles do carrossel">
+      <button class="arrow left" id="prev" aria-label="Slide anterior"></button>
+      <button class="arrow right" id="next" aria-label="Próximo slide"></button>
     </nav>
 
-    <div id="tema-toggle" class="tema-toggle">
-      <div class="bolinha"></div>
-    </div>
-  </header>
+    <!-- Progress / dots -->
+    <div class="progress" role="tablist" aria-label="Navegação por slides" id="dots"></div>
 
-  <main>
-    <h1>Bem-vindo à Locadora de Veículos</h1>
-    <p>Encontre o carro ideal para sua viagem, trabalho ou lazer.</p>
+    <!-- Footer / copyright minimal -->
+    <footer style="position:absolute;right:18px;bottom:18px;color:var(--muted);font-size:12px;z-index:210;">
+      © 2025 — Timeline Cyber
+    </footer>
 
-    <div id="conteudo" class="conteudo-scroll">
-      <p>Carregando conteúdo...</p>
-    </div>
-  </main>
+  </div> <!-- #app -->
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwKRgyC5MtrxTGLVpRAsVx2eVidt0kF-1yDMjpmNgxltBuj6uR5Ow12wAaSlaKPBmRx/exec"; // substitua pela URL do seu Apps Script
+    /* Slider logic — acessível, touch, teclado, smooth transforms.
+       Funcionalidades:
+       - next/prev via arrows
+       - dots para navegação direta
+       - suporte swipe (touch)
+       - atualiza classes .is-active
+       - mantém foco/aria corretamente
+    */
 
-    async function carregarConteudo() {
-      const container = document.getElementById('conteudo');
-      container.innerHTML = "<p>Carregando conteúdo...</p>";
+    (function () {
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const nextBtn = document.getElementById('next');
+      const prevBtn = document.getElementById('prev');
+      const dotsWrap = document.getElementById('dots');
+      let index = 0;
+      const len = slides.length;
 
-      try {
-        const res = await fetch(SCRIPT_URL);
-        const dados = await res.json();
-        container.innerHTML = '';
+      // create dots
+      slides.forEach((s, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'dot' + (i === 0 ? ' is-active' : '');
+        dot.setAttribute('aria-label', `Ir para slide ${i+1}`);
+        dot.setAttribute('role','tab');
+        dot.addEventListener('click', () => goTo(i, true));
+        dotsWrap.appendChild(dot);
+      });
+      const dots = Array.from(dotsWrap.children);
 
-        dados.forEach(item => {
-          const bloco = document.createElement('div');
-          bloco.className = 'bloco-item';
-
-          const titulo = document.createElement('h2');
-          titulo.textContent = item.Título || '';
-          bloco.appendChild(titulo);
-
-          const descricao = document.createElement('p');
-          descricao.textContent = item.Descrição || '';
-          bloco.appendChild(descricao);
-
-          if (item.Url && item.Url.startsWith('http')) {
-            const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/;
-
-            const match = item.Url.match(youtubeRegex);
-            if (match) {
-              const videoId = match[1];
-              const iframe = document.createElement('iframe');
-              iframe.src = `https://www.youtube.com/embed/${videoId}`;
-              iframe.height = "315";
-              iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-              iframe.setAttribute("allowfullscreen", true);
-              bloco.appendChild(iframe);
-            }
-            else if (item.Url.match(/\.(jpg|jpeg|png|gif|webp)$/i) || item.Url.includes('unsplash')) {
-              const img = document.createElement('img');
-              img.src = item.Url;
-              img.alt = item.Título || 'Imagem';
-              bloco.appendChild(img);
-            }
-            else {
-              const link = document.createElement('a');
-              link.href = item.Url;
-              link.textContent = 'Ver mais';
-              bloco.appendChild(link);
-            }
-          }
-
-          container.appendChild(bloco);
+      function update() {
+        slides.forEach((s, i) => {
+          s.classList.toggle('is-active', i === index);
+          s.setAttribute('aria-hidden', i === index ? 'false' : 'true');
         });
-      } catch (err) {
-        container.innerHTML = "<p>Erro ao carregar dados: " + err.message + "</p>";
+        dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
+        // update document title for context
+        const activeTitle = slides[index].querySelector('h2')?.textContent || '';
+        document.title = `${index+1}/${len} — ${activeTitle} — Timeline`;
       }
-    }
 
-    carregarConteudo();
+      function goTo(i, userInitiated = false) {
+        index = (i + len) % len;
+        update();
+        if (userInitiated) {
+          // move focus to active slide for screen readers
+          slides[index].querySelector('h2')?.focus?.();
+        }
+      }
+
+      nextBtn.addEventListener('click', () => goTo(index + 1, true));
+      prevBtn.addEventListener('click', () => goTo(index - 1, true));
+
+      // keyboard
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { goTo(index + 1, true); }
+        if (e.key === 'ArrowLeft') { goTo(index - 1, true); }
+      });
+
+      // touch / swipe support
+      (function addTouch() {
+        let startX = 0, dist = 0, threshold = 40;
+        const el = document.querySelector('.slides');
+        el.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, {passive:true});
+        el.addEventListener('touchmove', (e) => { dist = e.touches[0].clientX - startX; }, {passive:true});
+        el.addEventListener('touchend', () => {
+          if (Math.abs(dist) > threshold) {
+            if (dist < 0) goTo(index + 1, true); else goTo(index - 1, true);
+          }
+          dist = 0;
+        }, {passive:true});
+      })();
+
+      // accessibility: focusable slide headings
+      slides.forEach(s => {
+        const h2 = s.querySelector('h2');
+        if (h2) { h2.tabIndex = -1; }
+      });
+
+      // init
+      update();
+
+      // optional: deep-linking via hash (#slide-2)
+      function handleHash() {
+        const h = location.hash;
+        if (h && h.startsWith('#slide-')) {
+          const n = parseInt(h.replace('#slide-',''),10);
+          if (!isNaN(n) && n >= 0 && n < len) goTo(n, false);
+        }
+      }
+      window.addEventListener('hashchange', handleHash);
+      handleHash();
+    })();
   </script>
-
-  <script>
-    const toggle = document.getElementById("tema-toggle");
-    const body = document.body;
-
-    // Carregar tema salvo
-    let tema = localStorage.getItem("tema") || "tema-claro";
-    if (tema === "tema-escuro") body.classList.add("tema-escuro");
-
-    toggle.addEventListener("click", () => {
-      body.classList.toggle("tema-escuro");
-
-      const ativo = body.classList.contains("tema-escuro");
-      localStorage.setItem("tema", ativo ? "tema-escuro" : "tema-claro");
-    });
-  </script>
-
-  <!-- Rodapé -->
-  <footer>
-    <p>&copy; 2025 Locadora IFPR - Todos os direitos reservados</p>
-  </footer>
-
 </body>
-
 </html>
