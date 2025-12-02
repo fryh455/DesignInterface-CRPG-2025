@@ -1,57 +1,74 @@
+<?php
+header("Content-Type: text/html; charset=UTF-8");
+
+function salvarMensagem($dados) {
+    $arquivo = "mensagens.json";
+
+    if (!file_exists($arquivo)) {
+        file_put_contents($arquivo, "[]");
+    }
+
+    $lista = json_decode(file_get_contents($arquivo), true);
+    $lista[] = $dados;
+
+    file_put_contents($arquivo, json_encode($lista, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
+}
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $nome = htmlspecialchars($_POST["nome"] ?? "");
+    $email = htmlspecialchars($_POST["email"] ?? "");
+    $mensagem = htmlspecialchars($_POST["mensagem"] ?? "");
+    $data = date("Y-m-d H:i:s");
+
+    salvarMensagem([
+        "nome" => $nome,
+        "email" => $email,
+        "mensagem" => $mensagem,
+        "data" => $data
+    ]);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Locadora IFPR - Resultado do Formulário</title>
+    <title>Contato - Dados Recebidos</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<header>
+    <h2>Cyber Vault</h2>
+    <nav>
+        <a href="index.html">Início</a>
+        <a href="contatos.html">Contato</a>
+        <a href="planilha.html">Planilha</a>
+    </nav>
+</header>
 
-    <!-- Cabeçalho -->
-    <header>
-        <h2>Locadora IFPR</h2>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="carros.html">Carros</a>
-            <a href="filiais.html">Filiais</a>
-            <a href="contato.html">Contato</a>
-        </nav>
-    </header>
+<main>
+    <h1>Dados Recebidos</h1>
+    <div class="contato-form">
+        <?php if ($_SERVER["REQUEST_METHOD"] === "POST") : ?>
 
-    <!-- Conteúdo principal -->
-    <main>
-        <h1>Dados Recebidos</h1>
-        <div class="contato-form">
-            <?php
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                echo "<p><strong>Nome:</strong> " . htmlspecialchars($_POST["nome"]) . "</p>";
-                echo "<p><strong>Email:</strong> " . htmlspecialchars($_POST["email"]) . "</p>";
+            <p><strong>Nome:</strong> <?= $nome ?></p>
+            <p><strong>Email:</strong> <?= $email ?></p>
+            <p><strong>Mensagem:</strong> <?= nl2br($mensagem) ?></p>
+            <p><strong>Registrado em:</strong> <?= $data ?></p>
 
-                if (!empty($_POST["mensagem"])) {
-                    echo "<p><strong>Mensagem:</strong> " . nl2br(htmlspecialchars($_POST["mensagem"])) . "</p>";
-                }
+            <p style="color: #0f0;">Mensagem salva com sucesso no banco local.</p>
 
-                // Exibe os outros campos que o aluno adicionar
-                foreach ($_POST as $campo => $valor) {
-                    if (!in_array($campo, ["nome", "email", "mensagem"])) {
-                        echo "<p><strong>" . ucfirst($campo) . ":</strong> " . htmlspecialchars($valor) . "</p>";
-                    }
-                }
-            } else {
-                echo "<p>Nenhum dado foi enviado.</p>";
-            }
-            ?>
-        </div>
-    </main>
+        <?php else : ?>
+            <p>Nenhum dado foi enviado.</p>
+        <?php endif; ?>
+    </div>
+</main>
 
-    <!-- Rodapé -->
-    <footer>
-        <p>&copy; 2025 Locadora IFPR - Todos os direitos reservados</p>
-    </footer>
-
+<footer>
+    <p>&copy; 2025 Cyber Vault</p>
+</footer>
 </body>
-
 </html>
