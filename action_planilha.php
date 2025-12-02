@@ -1,29 +1,86 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+header("Content-Type: application/json; charset=UTF-8");
 
-    // URL do Apps Script
-    $url = "https://script.google.com/macros/s/SEU_ID_AQUI/exec";
+$arquivo = "cadastros.json";
 
-    // Dados do formulário
-    $data = [
-        "nome" => $_POST["nome"] ?? "",
-        "email" => $_POST["email"] ?? "",
-        "mensagem" => $_POST["mensagem"] ?? ""
-        // Adicione outros campos conforme necessário
+// cria o arquivo se não existir
+if (!file_exists($arquivo)) {
+    file_put_contents($arquivo, "[]");
+}
+
+// carrega os dados existentes
+$cadastros = json_decode(file_get_contents($arquivo), true);
+
+// garante que seja uma lista válida
+if (!is_array($cadastros)) {
+    $cadastros = [];
+}
+
+$action = $_GET["action"] ?? $_POST["action"] ?? "";
+
+/* ============================================================
+   1) LISTAR CADASTROS
+   ============================================================ */
+if ($action === "listar") {
+    echo json_encode($cadastros, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+/* ============================================================
+   2) CADASTRAR NOVO USUÁRIO
+   ============================================================ */
+if ($action === "cadastrar" && $_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $nome = htmlspecialchars($_POST["nome"] ?? "");
+    $telefone = htmlspecialchars($_POST["telefone"] ?? "");
+
+    if (!$nome || !$telefone) {
+        echo json_encode(["erro" => "Dados incompletos."], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    // adiciona ao "banco"
+    $cadastros[] = [
+        "nome" => $nome,
+        "telefone" => $telefone
     ];
 
-    // Inicializa cURL
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    file_put_contents($arquivo, json_encode($cadastros, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
-    $response = curl_exec($ch);
-    curl_close($ch);
+    echo json_encode(["status" => "ok", "mensagem" => "Cadastro salvo."], JSON_UNESCAPED_UNICODE);
+    exit;
+}
 
-    echo "<p>Dados enviados para a planilha com sucesso!</p>";
-    echo "<pre>" . htmlspecialchars($response) . "</pre>";
-    } else {
-        echo "<p>Nenhum dado foi enviado.</p>";
+/* ============================================================
+   3) LOGIN (VERIFICA SE O NOME EXISTE)
+   ============================================================ */
+if ($action === "login" && $_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $nome = strtolower(trim($_POST["nome"] ?? ""));
+
+    if (!$nome) {
+        echo json_encode(["erro" => "Nome não enviado."], JSON_UNESCAPED_UNICODE);
+        exit;
     }
+
+    foreach ($cadastros as $c) {
+        if (strtolower($c["nome"]) === $nome) {
+            echo json_encode([
+                "status" => "ok",
+                "mensagem" => "Login bem-sucedido.",
+                "usuario" => $c
+            ], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+    }
+
+    echo json_encode(["erro" => "Usuário não encontrado."], JSON_UNESCAPED_UNICODE);
+    exit;
+}
+
+/* ============================================================
+   4) CHAMADA INVÁLIDA
+   ============================================================ */
+echo json_encode(["erro" => "Ação inválida."], JSON_UNESCAPED_UNICODE);
+exit;
 ?>
