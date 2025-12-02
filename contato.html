@@ -1,51 +1,204 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Locadora IFPR - Contato</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contato — Cyber Vault</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <header class="app-header" role="banner" style="position:static">
+    <div class="brand">CYBER • CONTACTS</div>
+  </header>
 
-    <!-- Cabeçalho -->
-    <header>
-        <h2>Locadora IFPR</h2>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="filiais.html">Filiais</a>
-            <a href="contato.html">Contato</a>
-            <a href="planilha.html" aria-current="page">Planilha</a>
-        </nav>
-    </header>
+  <main style="padding:28px;max-width:920px;margin:64px auto;">
+    <h1 id="greeting">Entre em Contato</h1>
 
-    <!-- Conteúdo principal -->
-    <main>
-        <h1>Entre em Contato</h1>
-        <form class="contato-form" action="https://script.google.com/macros/s/SEU_ID_AQUI/exec" method="POST">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required>
+    <!-- AREA: Welcome / login state -->
+    <div id="user-area" style="margin-bottom:20px;">
+      <div id="welcome-box" style="display:none;">
+        <strong id="welcome-name"></strong>
+        <button id="logoutBtn" style="margin-left:12px;padding:6px 10px;border-radius:8px;border:none;cursor:pointer">Sair</button>
+      </div>
+    </div>
 
-            <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+    <!-- MINI CADASTRO -->
+    <section style="margin-bottom:28px;">
+      <h2 style="margin:0 0 8px 0">Mini Cadastro</h2>
+      <form id="cadastroForm" class="contato-form" autocomplete="off">
+        <label for="cadNome">Nome:</label>
+        <input type="text" id="cadNome" name="nome" placeholder="Seu nome completo" required>
 
-            <label for="mensagem">Mensagem:</label>
-            <textarea id="mensagem" name="mensagem" rows="5" placeholder="Escreva sua mensagem"></textarea>
+        <label for="cadTel">Telefone:</label>
+        <input type="tel" id="cadTel" name="telefone" placeholder="(xx) xxxxx-xxxx" required>
 
-            <label for="data">Data do contato:</label>
-            <input type="date" id="data" name="data">
+        <div style="display:flex;gap:10px;margin-top:10px;align-items:center">
+          <button type="submit">Cadastrar</button>
+          <div id="cadStatus" class="info-msg" style="margin:0"></div>
+        </div>
+      </form>
+    </section>
 
-            <button type="submit">Enviar</button>
-        </form>
-    </main>
+    <!-- LOGIN -->
+    <section style="margin-bottom:28px;">
+      <h2 style="margin:0 0 8px 0">Login</h2>
+      <form id="loginForm" class="contato-form" autocomplete="off">
+        <label for="loginNome">Nome (use o mesmo do cadastro):</label>
+        <input type="text" id="loginNome" name="loginNome" placeholder="Digite seu nome" required>
 
-    <!-- Rodapé -->
-    <footer>
-        <p>&copy; 2025 Locadora IFPR - Todos os direitos reservados</p>
-    </footer>
+        <div style="display:flex;gap:10px;margin-top:10px;align-items:center">
+          <button type="submit">Entrar</button>
+          <div id="loginStatus" class="info-msg" style="margin:0"></div>
+        </div>
+      </form>
+    </section>
 
+    <hr style="margin:28px 0;opacity:0.06"/>
+
+    <!-- CONTATO ORIGINAL (mensagem) -->
+    <section style="margin-bottom:28px;">
+      <h2 style="margin:0 0 8px 0">Mensagem</h2>
+      <form id="mensagemForm" class="contato-form" action="#" method="post" autocomplete="off">
+        <label for="msgNome">Nome:</label>
+        <input type="text" id="msgNome" name="msgNome" placeholder="Seu nome" required>
+
+        <label for="msgEmail">E-mail:</label>
+        <input type="email" id="msgEmail" name="msgEmail" placeholder="seu@exemplo.com" required>
+
+        <label for="msgTexto">Mensagem:</label>
+        <textarea id="msgTexto" name="mensagem" rows="5" placeholder="Escreva sua mensagem"></textarea>
+
+        <label for="msgData">Data do contato:</label>
+        <input type="date" id="msgData" name="data">
+
+        <div style="display:flex;gap:10px;margin-top:10px;align-items:center">
+          <button type="submit">Enviar Mensagem</button>
+          <div id="msgStatus" class="info-msg" style="margin:0"></div>
+        </div>
+      </form>
+    </section>
+
+  </main>
+
+  <footer style="text-align:center;padding:18px;color:var(--muted)">
+    © 2025 Cyber Vault
+  </footer>
+
+<script>
+/* CONTATOS: cadastro + login + persistência via Google Apps Script (Sheets)
+   - Substitua SCRIPT_URL pela sua URL do Apps Script que trata:
+     GET  ?tipo=cadastros        -> retorna array de cadastros [{nome, telefone}, ...]
+     POST (JSON) { tipo: "cadastro", nome, telefone } -> grava novo cadastro
+     POST (JSON) { tipo: "mensagem", nome, email, mensagem, data } -> grava mensagem
+*/
+const SCRIPT_URL = "https://script.google.com/macros/s/SEU_ID_AQUI/exec"; // <--- substitua aqui
+
+/* ----- helpers ----- */
+const $ = id => document.getElementById(id);
+const setStatus = (el, txt, err=false) => { el.textContent = txt; el.style.color = err ? '#ff6b6b' : ''; };
+
+/* ----- cadastro ----- */
+$('cadastroForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const nome = $('cadNome').value.trim();
+  const telefone = $('cadTel').value.trim();
+  const status = $('cadStatus');
+
+  if (!nome || !telefone) return setStatus(status, 'Preencha todos os campos', true);
+  setStatus(status, 'Enviando...');
+
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({ tipo:'cadastro', nome, telefone })
+    });
+    // optional: inspect response
+    setStatus(status, 'Cadastro salvo com sucesso.');
+    $('cadastroForm').reset();
+  } catch (err) {
+    setStatus(status, 'Erro ao salvar: ' + err.message, true);
+  }
+});
+
+/* ----- login ----- */
+$('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const nomeBusca = $('loginNome').value.trim();
+  const status = $('loginStatus');
+  if (!nomeBusca) return setStatus(status, 'Digite o nome para login', true);
+  setStatus(status, 'Verificando...');
+
+  try {
+    const res = await fetch(SCRIPT_URL + '?tipo=cadastros');
+    const cadastros = await res.json(); // espera array
+    const user = cadastros.find(c => c.nome && c.nome.toLowerCase() === nomeBusca.toLowerCase());
+
+    if (!user) {
+      setStatus(status, 'Usuário não encontrado.', true);
+      return;
+    }
+
+    // salvar login no browser
+    localStorage.setItem('usuarioLogado', user.nome);
+    setStatus(status, 'Login bem-sucedido. Bem-vindo, ' + user.nome + '!');
+    updateUIAfterLogin(user.nome);
+
+  } catch (err) {
+    setStatus(status, 'Erro: ' + err.message, true);
+  }
+});
+
+/* ----- mensagem original (envio para planilha) ----- */
+$('mensagemForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const nome = $('msgNome').value.trim();
+  const email = $('msgEmail').value.trim();
+  const mensagem = $('msgTexto').value.trim();
+  const data = $('msgData').value || new Date().toISOString().slice(0,10);
+  const status = $('msgStatus');
+
+  if (!nome || !email) return setStatus(status, 'Nome e e-mail são obrigatórios', true);
+  setStatus(status, 'Enviando mensagem...');
+
+  try {
+    const res = await fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json' },
+      body: JSON.stringify({ tipo:'mensagem', nome, email, mensagem, data })
+    });
+    setStatus(status, 'Mensagem enviada com sucesso.');
+    $('mensagemForm').reset();
+  } catch (err) {
+    setStatus(status, 'Erro ao enviar: ' + err.message, true);
+  }
+});
+
+/* ----- UI de login persistente ----- */
+function updateUIAfterLogin(nome) {
+  if (nome) {
+    $('welcome-box').style.display = 'inline-flex';
+    $('welcome-name').textContent = 'Bem-vindo, ' + nome;
+    $('greeting').textContent = 'Contato — Bem-vindo';
+  } else {
+    $('welcome-box').style.display = 'none';
+    $('welcome-name').textContent = '';
+    $('greeting').textContent = 'Entre em Contato';
+  }
+}
+
+/* logout */
+$('logoutBtn').addEventListener('click', () => {
+  localStorage.removeItem('usuarioLogado');
+  updateUIAfterLogin(null);
+});
+
+/* manter sessão ao recarregar */
+(function init() {
+  const nome = localStorage.getItem('usuarioLogado');
+  if (nome) updateUIAfterLogin(nome);
+})();
+
+</script>
 </body>
-
 </html>
