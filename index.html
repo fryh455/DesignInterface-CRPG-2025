@@ -1,86 +1,195 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Timeline</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<title>Popup Cyberpunk - Tipos de Vírus & Login</title>
+<style>
+body {
+    margin: 0;
+    background: #04070d;
+    font-family: "Orbitron", sans-serif;
+    color: #fff;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.5s, color 0.5s;
+}
+:root {
+    --bg: #04070d;
+    --fg: #fff;
+    --border: #00ffff;
+    --glow: #00ffff;
+}
+#toggleTheme:checked ~ .container {
+    --bg: #f5f5f5;
+    --fg: #000;
+    --border: #ff00ff;
+    --glow: #ff00ff;
+}
+.theme-switch { position: fixed; top: 30px; right: 50px; }
+#toggleTheme { display: none; }
+.switch {
+    width: 60px; height: 30px; background: #222;
+    border-radius: 30px; cursor: pointer;
+    position: relative; border: 2px solid var(--border);
+    box-shadow: 0 0 10px var(--glow);
+}
+.switch::after {
+    content:""; width:26px;height:26px;background:var(--glow);
+    border-radius:50%;position:absolute;left:2px;top:2px;transition: all 0.3s;
+}
+#toggleTheme:checked + .theme-switch .switch {
+    background:#ddd; border-color:#ff00ff; box-shadow:0 0 15px #ff00ff;
+}
+#toggleTheme:checked + .theme-switch .switch::after {
+    transform: translateX(30px); background:#ff00ff;
+}
+.container {
+    width:100%; height:100%;
+    background: var(--bg); color: var(--fg);
+    display:flex; justify-content:center; align-items:center;
+    transition: background 0.5s, color 0.5s;
+}
+.popup {
+    width:80vmin; height:80vmin; padding:20px;
+    background: rgba(15,15,30,0.85); border:3px solid var(--border);
+    box-shadow:0 0 30px var(--glow); border-radius:15px;
+    position:relative; display:flex; justify-content:center;
+    align-items:center; text-align:center;
+    overflow-y:auto;
+}
+input[type="radio"] { display:none; }
+.content {
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    max-width:85%; font-size:1.6rem; line-height:1.4;
+    text-align:center; display:none;
+}
+#s1:checked ~ .c1 { display:block; }
+#s2:checked ~ .c2 { display:block; }
+#s3:checked ~ .c3 { display:block; }
+#s4:checked ~ .c4 { display:block; }
+#s5:checked ~ .c5 { display:block; }
+#s6:checked ~ .c6 { display:block; }
+
+/* Setas */
+.arrow {
+    position:absolute; bottom:20px; right:30px; font-size:35px;
+    cursor:pointer; color:var(--border); text-shadow:0 0 15px var(--glow);
+    transition: color 0.3s, text-shadow 0.3s;
+}
+.arrow:hover { color:#ff00ff; text-shadow:0 0 25px #ff00ff; }
+.a1, .a2, .a3, .a4, .a5, .a6 { display:none; }
+#s1:checked ~ .a1 { display:inline; }
+#s2:checked ~ .a2 { display:inline; }
+#s3:checked ~ .a3 { display:inline; }
+#s4:checked ~ .a4 { display:inline; }
+#s5:checked ~ .a5 { display:inline; }
+#s6:checked ~ .a6 { display:inline; }
+
+/* Inputs do popup de login/cadastro */
+.content.c6 form {
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    margin: 10px 0;
+}
+.content.c6 input {
+    padding: 8px 10px;
+    font-size: 1.1rem;
+    width: 80%;
+    max-width: 300px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    margin-bottom: 8px;
+    background: rgba(0,0,0,0.6);
+    color: var(--fg);
+}
+.content.c6 button {
+    padding: 8px 20px;
+    font-size: 1.1rem;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+    background: var(--border);
+    color: var(--fg);
+    margin-top: 5px;
+}
+.content.c6 button:hover { background: var(--glow); }
+.content.c6 hr { width: 80%; border:1px solid var(--border); margin:15px 0; }
+</style>
 </head>
 <body>
 
-<div class="timeline-container">
+<input type="checkbox" id="toggleTheme">
+<div class="theme-switch"><label for="toggleTheme" class="switch"></label></div>
 
-    <div class="slides-wrapper" id="slidesWrapper">
+<div class="container">
+    <div class="popup">
 
-        <!-- Slide 1 -->
-        <section class="slide">
-            <h1>🦠 1986 — Brain Virus</h1>
-            <p>Primeiro vírus amplamente difundido na história da internet.</p>
-        </section>
+        <!-- Estados -->
+        <input type="radio" name="state" id="s1" checked>
+        <input type="radio" name="state" id="s2">
+        <input type="radio" name="state" id="s3">
+        <input type="radio" name="state" id="s4">
+        <input type="radio" name="state" id="s5">
+        <input type="radio" name="state" id="s6">
 
-        <!-- Slide 2 -->
-        <section class="slide">
-            <h1>🐛 2000 — ILOVEYOU</h1>
-            <p>Um dos mais destrutivos da história, causado bilhões em danos.</p>
-        </section>
+        <!-- Conteúdos -->
+        <div class="content c1">
+            <h2>Vírus de Boot</h2>
+            <p>Esses vírus atacam o setor de inicialização do sistema. Se o seu computador começar a agir estranho logo ao ligar, pode ser um vírus de boot tentando se ativar.</p>
+        </div>
 
-        <!-- Slide 3 -->
-        <section class="slide">
-            <h1>🕷 2008 — Conficker</h1>
-            <p>Infectou milhões de máquinas no mundo todo.</p>
-        </section>
+        <div class="content c2">
+            <h2>Vírus de Arquivo</h2>
+            <p>Infectam arquivos executáveis. Abrir um programa pode espalhar o vírus para outros arquivos do sistema.</p>
+        </div>
 
-        <!-- Slide 4 -->
-        <section class="slide">
-            <h1>🔥 2017 — WannaCry</h1>
-            <p>Se espalhou em minutos globalmente via ransomware.</p>
-        </section>
+        <div class="content c3">
+            <h2>Vírus Macro</h2>
+            <p>Se escondem em documentos de texto ou planilhas. Cada vez que você abre ou executa macros, eles se propagam.</p>
+        </div>
+
+        <div class="content c4">
+            <h2>Worms</h2>
+            <p>Worms não precisam de arquivos para se espalhar. Eles viajam pela rede automaticamente, consumindo recursos e bandwidth.</p>
+        </div>
+
+        <div class="content c5">
+            <h2>Trojans</h2>
+            <p>Trojans se disfarçam de programas legítimos. Eles podem roubar dados, criar backdoors ou abrir portas para outros ataques.</p>
+        </div>
+
+        <div class="content c6">
+            <h2>Login / Cadastro</h2>
+            <form id="registerForm" action="save_user.php" method="POST">
+                <h3>Cadastro</h3>
+                <input type="text" name="name" placeholder="Nome" required>
+                <input type="text" name="phone" placeholder="Telefone" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Senha" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+            <hr>
+            <form id="loginForm" action="login_user.php" method="POST">
+                <h3>Login</h3>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+
+        <!-- Setas -->
+        <label for="s2" class="arrow a1">&#9654;</label>
+        <label for="s3" class="arrow a2">&#9654;</label>
+        <label for="s4" class="arrow a3">&#9654;</label>
+        <label for="s5" class="arrow a4">&#9654;</label>
+        <label for="s6" class="arrow a5">&#9654;</label>
+        <label for="s1" class="arrow a6">&#9654;</label>
 
     </div>
-
-    <button class="arrow-btn" id="nextBtn">→</button>
-
 </div>
-
-<!-- Popup do contato -->
-<div id="popup" class="popup hidden">
-    <div class="popup-content">
-        <span class="close-btn" id="closePopup">×</span>
-        <h2>Cadastro</h2>
-        <form>
-            <label>Nome:</label>
-            <input type="text" placeholder="Seu nome">
-
-            <label>Telefone:</label>
-            <input type="text" placeholder="(xx) xxxxx-xxxx">
-
-            <button type="button">Enviar</button>
-        </form>
-    </div>
-</div>
-
-<script>
-    let current = 0;
-    const wrapper = document.getElementById("slidesWrapper");
-    const totalSlides = document.querySelectorAll(".slide").length;
-    const popup = document.getElementById("popup");
-    const closePopup = document.getElementById("closePopup");
-
-    document.getElementById("nextBtn").addEventListener("click", () => {
-        current++;
-
-        if (current < totalSlides) {
-            wrapper.style.transform = `translateX(-${current * 100}vw)`;
-        } else {
-            popup.classList.remove("hidden");
-        }
-    });
-
-    closePopup.addEventListener("click", () => {
-        popup.classList.add("hidden");
-        current = totalSlides - 1;
-    });
-</script>
 
 </body>
 </html>
