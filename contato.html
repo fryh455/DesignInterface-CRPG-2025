@@ -7,87 +7,92 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <header><h2>Cyber Vault — Contato</h2></header>
+  <header class="app-header">
+    <div class="brand">CYBER • CONTACTS</div>
+    <nav style="margin-left:18px;">
+      <a href="index.html">Timeline</a>
+      <a href="filiais.html">Brain</a>
+      <a href="planilha.html">Code Red</a>
+    </nav>
+  </header>
 
-  <main style="padding:24px; max-width:600px; margin:auto;">
-
+  <main style="padding:24px; max-width:700px; margin:70px auto;">
     <h1>Cadastro / Login</h1>
 
-    <!-- Formulário de cadastro -->
     <form id="cadastroForm">
-      <label>Nome:</label><br/>
-      <input type="text" name="nome" required/><br/>
-      <label>Telefone:</label><br/>
-      <input type="text" name="telefone" required/><br/>
-      <label>E-mail:</label><br/>
-      <input type="email" name="email" required/><br/>
-      <label>Senha:</label><br/>
-      <input type="password" name="senha" required/><br/>
+      <label>Nome</label><br/><input type="text" name="nome" required/><br/>
+      <label>Telefone</label><br/><input type="text" name="telefone" required/><br/>
+      <label>E-mail</label><br/><input type="email" name="email" required/><br/>
+      <label>Senha</label><br/><input type="password" name="senha" required/><br/>
       <button type="submit">Cadastrar</button>
     </form>
-    <div id="cadMsg"></div>
+    <div id="cadMsg" class="info-msg"></div>
 
-    <hr/>
+    <hr style="margin:20px 0; opacity:0.06;">
 
-    <!-- Formulário de login -->
     <form id="loginForm">
-      <label>Nome:</label><br/>
-      <input type="text" name="nome" required/><br/>
-      <label>Senha:</label><br/>
-      <input type="password" name="senha" required/><br/>
+      <label>Nome</label><br/><input type="text" name="nome" required/><br/>
+      <label>Senha</label><br/><input type="password" name="senha" required/><br/>
       <button type="submit">Login</button>
     </form>
-    <div id="loginMsg"></div>
+    <div id="loginMsg" class="info-msg"></div>
 
-    <h2 id="bemvindo" style="margin-top:24px;"></h2>
-
+    <h2 id="bemvindo" style="margin-top:18px;"></h2>
   </main>
 
-  <footer style="text-align:center; padding:12px;">© 2025 Cyber Vault</footer>
+  <footer style="text-align:center;padding:16px;color:var(--muted)">© 2025 Cyber Vault</footer>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbzXH7yPLftYDFzNsfLngNsUFG5-XZhZheEndk675YczHmHp0KRC2Ebw7wTH0brywmqu/exec";
 
-document.getElementById("cadastroForm").addEventListener("submit", async e => {
+function setStatus(el, txt, isErr=false){ el.textContent = txt; el.style.color = isErr ? '#ff6b6b' : ''; }
+
+document.getElementById("cadastroForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const fd = new FormData(e.target);
-  const data = {
+  const payload = {
     nome: fd.get("nome"),
     telefone: fd.get("telefone"),
     email: fd.get("email"),
     senha: fd.get("senha")
   };
+  const status = document.getElementById("cadMsg");
+  setStatus(status, "Enviando...");
   try {
-    const res = await fetch(API_URL, {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify(data)
-    });
+    const res = await fetch(API_URL, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(payload)});
     const j = await res.json();
-    document.getElementById("cadMsg").textContent = j.status === "OK" ? "Cadastro realizado!" : "Erro: " + (j.erro||"");
-  } catch(err) {
-    document.getElementById("cadMsg").textContent = "Erro de rede.";
+    if (j.status === "OK" || j.success) setStatus(status, "Cadastro realizado!");
+    else setStatus(status, "Erro: " + (j.erro || JSON.stringify(j)), true);
+    e.target.reset();
+  } catch (err) {
+    setStatus(status, "Erro de rede: " + err.message, true);
   }
 });
 
-document.getElementById("loginForm").addEventListener("submit", async e => {
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const nome = e.target.nome.value.trim();
   const senha = e.target.senha.value.trim();
+  const status = document.getElementById("loginMsg");
+  setStatus(status, "Validando...");
   try {
     const res = await fetch(API_URL + "?action=listar");
     const users = await res.json();
     const u = users.find(u => u.nome === nome && u.senha === senha);
-    if (!u) {
-      document.getElementById("loginMsg").textContent = "Usuário ou senha incorretos.";
-      return;
-    }
+    if (!u) { setStatus(status, "Usuário/senha incorretos", true); return; }
     document.getElementById("bemvindo").textContent = "Bem-vindo, " + u.nome + "!";
-    document.getElementById("loginMsg").textContent = "";
-  } catch(err) {
-    document.getElementById("loginMsg").textContent = "Erro de rede.";
+    setStatus(status, "Login realizado");
+    localStorage.setItem("usuarioLogado", u.nome);
+  } catch (err) {
+    setStatus(status, "Erro de rede: " + err.message, true);
   }
 });
+
+// mantem sessão
+(function(){
+  const nome = localStorage.getItem("usuarioLogado");
+  if (nome) document.getElementById("bemvindo").textContent = "Bem-vindo, " + nome + "!";
+})();
 </script>
 </body>
 </html>
